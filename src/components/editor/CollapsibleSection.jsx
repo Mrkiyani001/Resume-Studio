@@ -37,30 +37,30 @@ export function CollapsibleSection({
         className
       )}
     >
-      {/* Header Bar */}
-      <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-4 bg-slate-50/50 dark:bg-slate-900/50 select-none">
+      {/* Header Bar — Responsive 2-row on mobile when action is present, single row on desktop */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 p-3 sm:px-6 sm:py-4 bg-slate-50/50 dark:bg-slate-900/50 select-none">
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
           aria-expanded={isOpen}
           aria-controls={contentId}
-          className="flex-1 flex items-center justify-between gap-3 min-h-[44px] -my-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg group"
+          className="w-full sm:flex-1 flex items-center justify-between gap-2.5 min-h-[44px] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg group min-w-0"
         >
-          <div className="flex items-center gap-3 min-w-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
             {Icon && (
-              <div className="h-9 w-9 rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                <Icon className="h-5 w-5" aria-hidden="true" />
+              <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <Icon className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
               </div>
             )}
-            <div className="flex items-center gap-2.5 min-w-0">
-              <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 truncate">
+            <div className="flex items-center gap-2 min-w-0 flex-1">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100 truncate">
                 {title}
               </h3>
               {badge && <div className="shrink-0">{badge}</div>}
             </div>
           </div>
 
-          <div className="h-9 w-9 flex items-center justify-center text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200 transition-colors shrink-0">
+          <div className="h-8 w-8 sm:h-9 sm:w-9 flex items-center justify-center text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200 transition-colors shrink-0">
             <ChevronDown
               className={cn(
                 'h-5 w-5 transition-transform duration-200',
@@ -71,14 +71,18 @@ export function CollapsibleSection({
           </div>
         </button>
 
-        {action && <div className="shrink-0">{action}</div>}
+        {action && (
+          <div className="flex items-center justify-end sm:justify-start shrink-0 pl-10.5 sm:pl-0 pt-0.5 sm:pt-0">
+            {action}
+          </div>
+        )}
       </div>
 
       {/* Collapsible Body */}
       {isOpen && (
         <div
           id={contentId}
-          className="px-4 sm:px-6 py-5 border-t border-slate-100 dark:border-slate-800/80 space-y-5"
+          className="px-3.5 sm:px-6 py-4 sm:py-5 border-t border-slate-100 dark:border-slate-800/80 space-y-4 sm:space-y-5"
         >
           {children}
         </div>

@@ -40,6 +40,7 @@ export const Button = forwardRef(function Button(
   }
 
   const sizeStyles = {
+    xs: 'h-8 px-2.5 text-xs min-h-[32px]',
     sm: 'h-9 px-3 text-xs min-h-[36px]',
     md: 'min-h-[44px] px-4 py-2.5 text-sm',
     lg: 'min-h-[48px] px-6 py-3 text-base',
@@ -55,13 +56,13 @@ export const Button = forwardRef(function Button(
       {...props}
     >
       {loading ? (
-        <Loader2 className="h-4 w-4 animate-spin mr-2" aria-hidden="true" />
+        <Loader2 className="h-4 w-4 animate-spin mr-2 shrink-0" aria-hidden="true" />
       ) : LeftIcon ? (
-        <LeftIcon className="h-4 w-4 mr-2 shrink-0" aria-hidden="true" />
+        <LeftIcon className={cn('h-4 w-4 shrink-0', children ? 'mr-1.5 sm:mr-2' : '')} aria-hidden="true" />
       ) : null}
-      <span>{children}</span>
+      {children !== undefined && children !== null && <span>{children}</span>}
       {!loading && RightIcon && (
-        <RightIcon className="h-4 w-4 ml-2 shrink-0" aria-hidden="true" />
+        <RightIcon className={cn('h-4 w-4 shrink-0', children ? 'ml-1.5 sm:ml-2' : '')} aria-hidden="true" />
       )}
     </button>
   )

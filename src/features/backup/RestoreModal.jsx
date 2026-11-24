@@ -87,22 +87,25 @@ export function RestoreModal({ isOpen, onClose, onRestoreComplete }) {
       description="Restore master resumes, applications, and archived PDF Blobs from JSON or complete ZIP backups."
       footer={
         step === 'select' ? (
-          <Button variant="ghost" size="sm" onClick={onClose}>
-            Cancel
-          </Button>
+          <div className="flex items-center justify-end w-full">
+            <Button variant="ghost" size="sm" onClick={onClose}>
+              Cancel
+            </Button>
+          </div>
         ) : (
-          <div className="w-full flex items-center justify-between gap-2 flex-wrap">
+          <div className="w-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
             <Button
               variant="outline"
               size="sm"
               leftIcon={RotateCcw}
               onClick={handleReset}
               disabled={isProcessing}
+              className="w-full sm:w-auto"
             >
               Choose Different Backup
             </Button>
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" onClick={onClose} disabled={isProcessing}>
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+              <Button variant="ghost" size="sm" onClick={onClose} disabled={isProcessing} className="flex-1 sm:flex-initial">
                 Cancel
               </Button>
               <Button
@@ -111,6 +114,7 @@ export function RestoreModal({ isOpen, onClose, onRestoreComplete }) {
                 leftIcon={CheckCircle2}
                 loading={isProcessing}
                 onClick={handleConfirmRestore}
+                className="flex-1 sm:flex-initial whitespace-nowrap"
               >
                 Confirm Restore ({strategy === 'replace' ? 'Replace All' : 'Merge'})
               </Button>

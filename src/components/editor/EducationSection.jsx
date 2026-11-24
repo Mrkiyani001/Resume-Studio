@@ -8,7 +8,7 @@ import { createEmptyEducation } from '../../models/resumeSchema.js'
 import { useListReorder } from '../../hooks/useListReorder.js'
 
 /**
- * Education Entry Item.
+ * Education Entry Item with responsive mobile header.
  */
 function EducationItem({
   item,
@@ -23,12 +23,13 @@ function EducationItem({
   const title = item.degree || 'Degree / Program'
 
   return (
-    <div className="p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 space-y-4 shadow-2xs">
-      <div className="flex items-center justify-between gap-2">
-        <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200 truncate">
+    <div className="p-3.5 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 space-y-4 shadow-2xs">
+      {/* Header — Stacked 2-row on mobile, single row on desktop */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2 sm:pb-0 border-b sm:border-b-0 border-slate-200/60 dark:border-slate-800">
+        <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200 truncate min-w-0 flex-1">
           {title}
         </h4>
-        <div className="flex items-center gap-1 shrink-0">
+        <div className="flex items-center justify-end gap-1 shrink-0 w-full sm:w-auto">
           <Button
             variant="ghost"
             size="sm"
@@ -59,7 +60,7 @@ function EducationItem({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <Input
           label="Degree / Certificate"
           placeholder="e.g. Bachelor of Science in Computer Science"
@@ -98,8 +99,8 @@ function EducationItem({
 
       <ConfirmDialog
         isOpen={isConfirmDeleteOpen}
-        title={`Delete "${title}"?`}
-        description="Are you sure you want to remove this education entry?"
+        title={`Delete Education "${title}"?`}
+        description="Are you sure you want to remove this education credential?"
         confirmText="Delete Education"
         cancelText="Cancel"
         variant="danger"
@@ -115,6 +116,7 @@ function EducationItem({
 
 /**
  * Education Section.
+ * Manages degree/certificate credentials with reordering and deletion.
  *
  * @param {Object} props
  * @param {Array<Object>} props.education
@@ -138,7 +140,7 @@ export function EducationSection({ education = [], onChange }) {
       defaultOpen={true}
       badge={
         <span className="text-[11px] font-medium text-slate-400">
-          {items.length} {items.length === 1 ? 'entry' : 'entries'}
+          {items.length} {items.length === 1 ? 'credential' : 'credentials'}
         </span>
       }
       action={
@@ -154,14 +156,14 @@ export function EducationSection({ education = [], onChange }) {
     >
       {items.length === 0 ? (
         <div className="py-8 text-center border border-dashed border-slate-200 dark:border-slate-800 rounded-xl space-y-3">
-          <p className="text-xs text-slate-400">No education entries added yet.</p>
+          <p className="text-xs text-slate-400">No education credentials added yet.</p>
           <Button
             variant="primary"
             size="sm"
             leftIcon={Plus}
             onClick={() => add(createEmptyEducation())}
           >
-            Add First Education Entry
+            Add First Education Credential
           </Button>
         </div>
       ) : (

@@ -19,12 +19,13 @@ export function ConfirmDialog({
       onClose={onClose}
       size="sm"
       footer={
-        <>
+        <div className="flex items-center justify-end gap-2.5 w-full">
           <Button
             variant="outline"
             size="md"
             onClick={onClose}
             disabled={loading}
+            className="flex-1 sm:flex-initial"
           >
             {cancelText}
           </Button>
@@ -33,10 +34,11 @@ export function ConfirmDialog({
             size="md"
             loading={loading}
             onClick={onConfirm}
+            className="flex-1 sm:flex-initial"
           >
             {confirmText}
           </Button>
-        </>
+        </div>
       }
     >
       <div className="flex items-start gap-3.5 py-1">

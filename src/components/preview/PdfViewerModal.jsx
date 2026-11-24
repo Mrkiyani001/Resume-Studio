@@ -155,8 +155,8 @@ export function PdfViewerModal({
           : 'Interactive offline preview rendered from structured resume data.'
       }
       footer={
-        <div className="w-full flex items-center justify-between gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5">
+        <div className="w-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+          <div className="flex items-center gap-1.5 justify-between sm:justify-start">
             <span className="text-xs text-slate-500 dark:text-slate-400">
               {numPages > 0 ? `${numPages} ${numPages === 1 ? 'Page' : 'Pages'}` : ''}
             </span>
@@ -167,8 +167,8 @@ export function PdfViewerModal({
             )}
           </div>
 
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={onClose}>
+          <div className="flex items-center gap-2 justify-end">
+            <Button variant="outline" size="sm" onClick={onClose} className="flex-1 sm:flex-initial">
               Return to Editor
             </Button>
             <Button
@@ -177,6 +177,7 @@ export function PdfViewerModal({
               leftIcon={Download}
               onClick={handleDownloadClick}
               disabled={!pdfBlob}
+              className="flex-1 sm:flex-initial whitespace-nowrap"
             >
               Download PDF
             </Button>
@@ -223,8 +224,8 @@ export function PdfViewerModal({
             />
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-mono truncate max-w-[130px] sm:max-w-xs">
               {filename}
             </span>
           </div>

@@ -47,14 +47,14 @@ export function NewVariantModal({ isOpen, onClose, onCreated }) {
       description="Start a new master resume variant with clean, structured sections."
       size="sm"
       footer={
-        <>
-          <Button variant="outline" onClick={handleClose} disabled={isSubmitting}>
+        <div className="flex items-center justify-end gap-2.5 w-full">
+          <Button variant="outline" onClick={handleClose} disabled={isSubmitting} className="flex-1 sm:flex-initial">
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleSubmit} loading={isSubmitting}>
+          <Button variant="primary" onClick={handleSubmit} loading={isSubmitting} className="flex-1 sm:flex-initial">
             Create Resume
           </Button>
-        </>
+        </div>
       }
     >
       <form onSubmit={handleSubmit} className="space-y-4">

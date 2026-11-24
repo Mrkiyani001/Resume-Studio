@@ -167,11 +167,12 @@ export function SettingsView() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
             <Button
               variant={theme === 'light' ? 'primary' : 'outline'}
               leftIcon={Sun}
               onClick={() => setTheme('light')}
+              className="px-2 sm:px-3 text-xs sm:text-sm"
             >
               Light
             </Button>
@@ -179,6 +180,7 @@ export function SettingsView() {
               variant={theme === 'dark' ? 'primary' : 'outline'}
               leftIcon={Moon}
               onClick={() => setTheme('dark')}
+              className="px-2 sm:px-3 text-xs sm:text-sm"
             >
               Dark
             </Button>
@@ -186,6 +188,7 @@ export function SettingsView() {
               variant={theme === 'system' ? 'primary' : 'outline'}
               leftIcon={Laptop}
               onClick={() => setTheme('system')}
+              className="px-2 sm:px-3 text-xs sm:text-sm"
             >
               System
             </Button>
@@ -210,8 +213,8 @@ export function SettingsView() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="p-3.5 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs sm:text-sm">
-            <div>
+          <div className="p-3.5 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs sm:text-sm">
+            <div className="min-w-0">
               <span className="text-slate-500 dark:text-slate-400">IndexedDB Usage:</span>{' '}
               <span className="font-semibold text-slate-900 dark:text-slate-100">
                 {storageEstimate?.usage ? formatBytes(storageEstimate.usage) : 'Calculating...'}
@@ -222,14 +225,14 @@ export function SettingsView() {
                 </span>
               ) : null}
             </div>
-            <Button variant="ghost" size="sm" leftIcon={RefreshCw} onClick={checkStorage}>
+            <Button variant="ghost" size="sm" leftIcon={RefreshCw} onClick={checkStorage} className="self-end sm:self-auto">
               Refresh
             </Button>
           </div>
 
           {!isPersisted && (
-            <div className="flex items-center justify-between p-3.5 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-lg">
-              <div className="flex items-start gap-2.5">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3.5 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-lg gap-3">
+              <div className="flex items-start gap-2.5 min-w-0">
                 <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0" />
                 <p className="text-xs text-amber-800 dark:text-amber-300">
                   Storage is currently best-effort. Under heavy disk pressure, your browser may evict storage.
@@ -240,7 +243,7 @@ export function SettingsView() {
                 variant="outline"
                 leftIcon={ShieldCheck}
                 onClick={handleRequestPersistence}
-                className="shrink-0 ml-3"
+                className="shrink-0 w-full sm:w-auto"
               >
                 Request Persistence
               </Button>

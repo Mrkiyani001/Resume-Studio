@@ -206,11 +206,12 @@ export function NewApplicationView({ preselectedVariantId, onOpenApplication, on
             </div>
           </CardContent>
 
-          <CardFooter className="flex items-center justify-between gap-3">
+          <CardFooter className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
             <Button
               variant="outline"
               onClick={() => onNavigate?.('my-resumes')}
               disabled={isSubmitting}
+              className="w-full sm:w-auto"
             >
               Cancel
             </Button>
@@ -220,6 +221,7 @@ export function NewApplicationView({ preselectedVariantId, onOpenApplication, on
               loading={isSubmitting}
               leftIcon={PlusCircle}
               rightIcon={ArrowRight}
+              className="w-full sm:w-auto text-xs sm:text-sm whitespace-nowrap"
             >
               Create Application & Open Editor
             </Button>

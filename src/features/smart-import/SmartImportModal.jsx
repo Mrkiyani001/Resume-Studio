@@ -139,23 +139,26 @@ export function SmartImportModal({ isOpen, onClose, onImportSuccess }) {
       description="Import existing .docx or digital .pdf resumes directly into independent master variants."
       footer={
         step === 'upload' ? (
-          <Button variant="ghost" size="sm" onClick={onClose}>
-            Cancel
-          </Button>
+          <div className="flex items-center justify-end w-full">
+            <Button variant="ghost" size="sm" onClick={onClose}>
+              Cancel
+            </Button>
+          </div>
         ) : (
-          <div className="w-full flex items-center justify-between gap-2 flex-wrap">
+          <div className="w-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
             <Button
               variant="outline"
               size="sm"
               leftIcon={RotateCcw}
               onClick={handleReset}
               disabled={isProcessing}
+              className="w-full sm:w-auto"
             >
               Choose Different File
             </Button>
 
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" onClick={onClose} disabled={isProcessing}>
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+              <Button variant="ghost" size="sm" onClick={onClose} disabled={isProcessing} className="flex-1 sm:flex-initial">
                 Cancel
               </Button>
               <Button
@@ -164,6 +167,7 @@ export function SmartImportModal({ isOpen, onClose, onImportSuccess }) {
                 leftIcon={CheckCircle2}
                 loading={isProcessing}
                 onClick={handleSaveVariant}
+                className="flex-1 sm:flex-initial whitespace-nowrap"
               >
                 Save as Master Variant
               </Button>
@@ -278,20 +282,21 @@ export function SmartImportModal({ isOpen, onClose, onImportSuccess }) {
           {/* Unassigned Content Tray (Zero Silent Data Loss) */}
           {unassignedList.length > 0 && (
             <div className="p-3.5 rounded-xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/50 space-y-2.5">
-              <div className="flex items-center justify-between gap-2 flex-wrap">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
                 <div className="flex items-center gap-1.5">
-                  <AlertTriangle className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+                  <AlertTriangle className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span className="text-xs font-semibold text-amber-900 dark:text-amber-200">
                     Unassigned Content ({unassignedList.length} items)
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 justify-end">
                   <Button
                     type="button"
                     variant="outline"
                     size="xs"
                     leftIcon={Copy}
                     onClick={handleCopyUnassigned}
+                    className="flex-1 sm:flex-initial"
                   >
                     Copy
                   </Button>
@@ -301,6 +306,7 @@ export function SmartImportModal({ isOpen, onClose, onImportSuccess }) {
                     size="xs"
                     leftIcon={Plus}
                     onClick={handleAppendUnassignedToSummary}
+                    className="flex-1 sm:flex-initial whitespace-nowrap"
                   >
                     Append to Summary
                   </Button>

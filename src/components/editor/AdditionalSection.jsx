@@ -10,7 +10,7 @@ import { createEmptyCustomSection, generateId } from '../../models/resumeSchema.
 import { useListReorder } from '../../hooks/useListReorder.js'
 
 /**
- * Single Entry Item within a Custom Section.
+ * Single Entry Item within a Custom Section with responsive mobile header.
  */
 function CustomSectionEntry({
   item,
@@ -22,12 +22,13 @@ function CustomSectionEntry({
   onMoveDown,
 }) {
   return (
-    <div className="p-3.5 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3 shadow-2xs">
-      <div className="flex items-center justify-between gap-2">
-        <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 truncate">
+    <div className="p-3 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3 shadow-2xs">
+      {/* Entry Header — Stacked 2-row on mobile, single row on desktop */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-1.5 sm:pb-0 border-b sm:border-b-0 border-slate-100 dark:border-slate-800">
+        <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 truncate min-w-0 flex-1">
           {item.title || `Entry #${index + 1}`}
         </span>
-        <div className="flex items-center gap-1 shrink-0">
+        <div className="flex items-center justify-end gap-1 shrink-0 w-full sm:w-auto">
           <Button
             variant="ghost"
             size="sm"
@@ -94,7 +95,7 @@ function CustomSectionEntry({
 }
 
 /**
- * Custom Section Card with nested item reordering.
+ * Custom Section Card with nested item reordering and responsive header.
  */
 function CustomSectionCard({
   section,
@@ -121,14 +122,14 @@ function CustomSectionCard({
 
   return (
     <div
-      className={`p-4 sm:p-5 rounded-xl border ${
+      className={`p-3.5 sm:p-5 rounded-xl border ${
         isVisible
           ? 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40'
           : 'border-dashed border-slate-300 dark:border-slate-700 bg-slate-100/40 dark:bg-slate-900/20 opacity-80'
       } space-y-4 shadow-2xs transition-all`}
     >
       {/* Custom Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3">
         <div className="flex-1 min-w-0 flex items-center gap-2">
           <Input
             placeholder="Section Title (e.g. Projects, Certifications, Publications)"
@@ -139,7 +140,7 @@ function CustomSectionCard({
         </div>
 
         {/* Section Visibility & Ordering */}
-        <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+        <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 w-full sm:w-auto pt-1 sm:pt-0 border-t sm:border-t-0 border-slate-200/60 dark:border-slate-700/60">
           <ToggleSwitch
             id={`toggle-section-visible-${index}`}
             label={isVisible ? 'Visible' : 'Hidden'}
@@ -181,9 +182,9 @@ function CustomSectionCard({
       {/* Entries List */}
       <div className="space-y-3 pt-1">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">
+          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
             Section Items ({entries.length})
-          </span>
+          </label>
           <Button
             variant="outline"
             size="sm"
@@ -203,15 +204,15 @@ function CustomSectionCard({
         </div>
 
         {entries.length === 0 ? (
-          <div className="py-6 text-center border border-dashed border-slate-200 dark:border-slate-800 rounded-lg">
-            <p className="text-xs text-slate-400">No items added to this section.</p>
-          </div>
+          <p className="text-xs text-slate-400 italic py-2">
+            No entries in this section yet. Click &quot;Add Item&quot; to begin.
+          </p>
         ) : (
           <div className="space-y-2.5">
-            {entries.map((entry, eIdx) => (
+            {entries.map((item, eIdx) => (
               <CustomSectionEntry
-                key={entry.id || eIdx}
-                item={entry}
+                key={item.id || eIdx}
+                item={item}
                 index={eIdx}
                 total={entries.length}
                 onUpdate={(updates) => updateEntry(eIdx, updates)}
@@ -228,7 +229,7 @@ function CustomSectionCard({
       <ConfirmDialog
         isOpen={isConfirmDeleteOpen}
         title={`Delete Section "${section.title || 'Untitled'}"?`}
-        description="Are you sure you want to delete this custom section and all its contents?"
+        description="Are you sure you want to remove this entire custom section and all its entries?"
         confirmText="Delete Section"
         cancelText="Cancel"
         variant="danger"
@@ -243,8 +244,9 @@ function CustomSectionCard({
 }
 
 /**
- * Additional / Custom Sections Container.
- * Supports adding, renaming, hiding/showing, and reordering custom sections.
+ * Additional / Custom Sections Manager.
+ * Allows adding dynamic sections (e.g. Certifications, Projects, Publications, Languages)
+ * with independent visibility, item reordering, and deletion.
  *
  * @param {Object} props
  * @param {Array<Object>} props.additionalSections
@@ -252,12 +254,12 @@ function CustomSectionCard({
  */
 export function AdditionalSection({ additionalSections = [], onChange }) {
   const {
-    items: sections,
-    add: addSection,
-    update: updateSection,
-    remove: removeSection,
-    moveUp: moveUpSection,
-    moveDown: moveDownSection,
+    items,
+    add,
+    update,
+    remove,
+    moveUp,
+    moveDown,
   } = useListReorder(additionalSections, onChange)
 
   return (
@@ -268,7 +270,7 @@ export function AdditionalSection({ additionalSections = [], onChange }) {
       defaultOpen={false}
       badge={
         <span className="text-[11px] font-medium text-slate-400">
-          {sections.length} {sections.length === 1 ? 'section' : 'sections'}
+          {items.length} {items.length === 1 ? 'section' : 'sections'}
         </span>
       }
       action={
@@ -276,42 +278,38 @@ export function AdditionalSection({ additionalSections = [], onChange }) {
           variant="outline"
           size="sm"
           leftIcon={Plus}
-          onClick={() =>
-            addSection(createEmptyCustomSection({ title: 'Projects' }))
-          }
+          onClick={() => add(createEmptyCustomSection())}
         >
-          Add Custom Section
+          Add Section
         </Button>
       }
     >
-      {sections.length === 0 ? (
+      {items.length === 0 ? (
         <div className="py-8 text-center border border-dashed border-slate-200 dark:border-slate-800 rounded-xl space-y-3">
           <p className="text-xs text-slate-400">
-            No custom sections created. Add sections for Projects, Certifications, Awards, or Languages.
+            No additional sections added. You can add Certifications, Projects, Awards, or Languages.
           </p>
           <Button
-            variant="outline"
+            variant="primary"
             size="sm"
             leftIcon={Plus}
-            onClick={() =>
-              addSection(createEmptyCustomSection({ title: 'Projects' }))
-            }
+            onClick={() => add(createEmptyCustomSection())}
           >
-            Add First Custom Section
+            Add Custom Section
           </Button>
         </div>
       ) : (
         <div className="space-y-4">
-          {sections.map((sec, idx) => (
+          {items.map((sec, idx) => (
             <CustomSectionCard
               key={sec.id || idx}
               section={sec}
               index={idx}
-              total={sections.length}
-              onUpdateSection={(updates) => updateSection(idx, updates)}
-              onDeleteSection={() => removeSection(idx)}
-              onMoveUpSection={() => moveUpSection(idx)}
-              onMoveDownSection={() => moveDownSection(idx)}
+              total={items.length}
+              onUpdateSection={(updates) => update(idx, updates)}
+              onDeleteSection={() => remove(idx)}
+              onMoveUpSection={() => moveUp(idx)}
+              onMoveDownSection={() => moveDown(idx)}
             />
           ))}
         </div>

@@ -60,7 +60,7 @@ export function SaveStateBadge({ state = 'idle', className }) {
       role="status"
       aria-live="polite"
       className={cn(
-        'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border select-none transition-all duration-200',
+        'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border select-none transition-all duration-200 whitespace-nowrap shrink-0',
         current.className,
         className
       )}

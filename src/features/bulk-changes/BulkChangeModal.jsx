@@ -183,7 +183,7 @@ export function BulkChangeModal({
       description="Deterministic parser for structured Old: / New: resume updates"
       footer={
         step === 'input' ? (
-          <>
+          <div className="flex items-center justify-end gap-2 w-full">
             <Button variant="ghost" size="sm" onClick={onClose}>
               Cancel
             </Button>
@@ -193,22 +193,24 @@ export function BulkChangeModal({
               leftIcon={Sparkles}
               disabled={!rawText.trim()}
               onClick={handleParse}
+              className="whitespace-nowrap"
             >
               Parse Changes
             </Button>
-          </>
+          </div>
         ) : (
-          <div className="w-full flex items-center justify-between gap-2 flex-wrap">
+          <div className="w-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
             <Button
               variant="outline"
               size="sm"
               leftIcon={RotateCcw}
               onClick={() => setStep('input')}
+              className="w-full sm:w-auto"
             >
               Back to Input
             </Button>
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" onClick={onClose}>
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+              <Button variant="ghost" size="sm" onClick={onClose} className="flex-1 sm:flex-initial">
                 Cancel
               </Button>
               <Button
@@ -217,6 +219,7 @@ export function BulkChangeModal({
                 leftIcon={Check}
                 disabled={stats.acceptedCount === 0}
                 onClick={handleApply}
+                className="flex-1 sm:flex-initial whitespace-nowrap"
               >
                 Apply {stats.acceptedCount} Accepted {stats.acceptedCount === 1 ? 'Change' : 'Changes'}
               </Button>
@@ -280,7 +283,7 @@ New: Replacement text for this bullet or field`}
         /* STEP 2: REVIEW MODE */
         <div className="space-y-5">
           {/* Status Breakdown Pill Strip */}
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 flex items-center justify-between gap-2 flex-wrap text-xs">
+          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 text-xs">
             <div className="flex items-center gap-1.5 flex-wrap">
               <span className="font-semibold text-slate-700 dark:text-slate-300">
                 {stats.total} Changes:
@@ -312,11 +315,12 @@ New: Replacement text for this bullet or field`}
               )}
             </div>
 
-            <div className="flex items-center gap-1.5 shrink-0">
+            <div className="flex items-center gap-1.5 justify-end sm:justify-start w-full sm:w-auto shrink-0 pt-1 sm:pt-0 border-t sm:border-t-0 border-slate-200/60 dark:border-slate-700/60">
               <Button
                 variant="outline"
                 size="xs"
                 onClick={handleAcceptAllSafelyMatched}
+                className="flex-1 sm:flex-initial whitespace-nowrap"
               >
                 Accept All Safely Matched
               </Button>
@@ -324,6 +328,7 @@ New: Replacement text for this bullet or field`}
                 variant="ghost"
                 size="xs"
                 onClick={handleRejectAll}
+                className="flex-1 sm:flex-initial whitespace-nowrap"
               >
                 Reject All
               </Button>
@@ -432,7 +437,7 @@ New: Replacement text for this bullet or field`}
                             : ''
                         }
                         onChange={(e) => handleManualTargetSelect(change.id, e.target.value)}
-                        className={`text-xs rounded-lg border bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 py-1.5 px-2.5 focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 flex-1 min-w-[200px] ${
+                        className={`text-xs rounded-lg border bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 py-1.5 px-2.5 focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 flex-1 min-w-0 w-full sm:w-auto ${
                           needsManualTarget
                             ? 'border-amber-300 dark:border-amber-700 bg-amber-50/30'
                             : 'border-slate-300 dark:border-slate-700'

@@ -40,14 +40,14 @@ export function RenameVariantModal({ isOpen, onClose, variant, onRenamed }) {
       description="Update the name of this master variant."
       size="sm"
       footer={
-        <>
-          <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
+        <div className="flex items-center justify-end gap-2.5 w-full">
+          <Button variant="outline" onClick={onClose} disabled={isSubmitting} className="flex-1 sm:flex-initial">
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleSubmit} loading={isSubmitting}>
+          <Button variant="primary" onClick={handleSubmit} loading={isSubmitting} className="flex-1 sm:flex-initial">
             Save Changes
           </Button>
-        </>
+        </div>
       }
     >
       <form onSubmit={handleSubmit} className="space-y-4">

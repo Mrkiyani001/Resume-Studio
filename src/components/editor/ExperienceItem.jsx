@@ -18,6 +18,8 @@ import { cn } from '../../lib/utils.js'
 /**
  * Individual Work Experience Entry Card.
  * Expandable card with role metadata and individual bullet point controls.
+ * Uses a responsive stacked two-row header on mobile viewports (< 640px)
+ * to prevent cramped text and ensure clean readability.
  *
  * @param {Object} props
  * @param {Object} props.experience
@@ -51,12 +53,13 @@ export function ExperienceItem({
 
   return (
     <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 overflow-hidden transition-all shadow-2xs">
-      {/* Header Summary */}
-      <div className="flex items-center justify-between gap-3 p-3.5 sm:p-4 bg-slate-100/50 dark:bg-slate-800/40 select-none">
+      {/* Header Summary — Stacked 2-row on mobile, single row on desktop */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 p-3 sm:p-4 bg-slate-100/50 dark:bg-slate-800/40 select-none">
+        {/* Top Row: Title, Company, Dates & Chevron */}
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="flex-1 flex items-center gap-3 min-h-[44px] -my-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg group min-w-0"
+          className="w-full sm:flex-1 flex items-center gap-2.5 sm:gap-3 min-h-[44px] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg group min-w-0"
         >
           <div className="h-8 w-8 rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-950/80 dark:text-blue-300 flex items-center justify-center shrink-0">
             <Briefcase className="h-4 w-4" />
@@ -65,19 +68,19 @@ export function ExperienceItem({
             <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
               {roleTitle}
             </h4>
-            <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              <span className="font-medium text-slate-700 dark:text-slate-300 truncate">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              <span className="font-medium text-slate-700 dark:text-slate-300 truncate max-w-[130px] sm:max-w-none">
                 {company}
               </span>
               <span>•</span>
-              <span className="flex items-center gap-1">
+              <span className="flex items-center gap-1 shrink-0">
                 <Calendar className="h-3 w-3" />
                 {dateRange}
               </span>
               {experience.location && (
                 <>
                   <span>•</span>
-                  <span className="flex items-center gap-1 truncate">
+                  <span className="flex items-center gap-1 truncate max-w-[110px] sm:max-w-none">
                     <MapPin className="h-3 w-3" />
                     {experience.location}
                   </span>
@@ -93,8 +96,8 @@ export function ExperienceItem({
           </div>
         </button>
 
-        {/* Action Controls */}
-        <div className="flex items-center gap-1 shrink-0">
+        {/* Bottom Row (Mobile) / Right Side (Desktop): Action Toolbar */}
+        <div className="flex items-center justify-end gap-1 shrink-0 pt-1.5 sm:pt-0 border-t sm:border-t-0 border-slate-200/60 dark:border-slate-700/60 w-full sm:w-auto">
           <Button
             variant="ghost"
             size="sm"
@@ -135,8 +138,8 @@ export function ExperienceItem({
 
       {/* Expandable Form Body */}
       {isOpen && (
-        <div className="p-4 sm:p-5 border-t border-slate-200/80 dark:border-slate-800 space-y-4 bg-white dark:bg-slate-900">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="p-3.5 sm:p-5 border-t border-slate-200/80 dark:border-slate-800 space-y-4 bg-white dark:bg-slate-900">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <Input
               label="Job Title"
               placeholder="e.g. Lead Product Designer"
@@ -186,8 +189,8 @@ export function ExperienceItem({
       {/* Delete Confirmation */}
       <ConfirmDialog
         isOpen={isConfirmDeleteOpen}
-        title={`Delete "${roleTitle}"?`}
-        description="Are you sure you want to delete this work experience entry and all its bullet points?"
+        title={`Delete Role at ${company}?`}
+        description="Are you sure you want to remove this work experience entry and all its bullet points?"
         confirmText="Delete Role"
         cancelText="Cancel"
         variant="danger"

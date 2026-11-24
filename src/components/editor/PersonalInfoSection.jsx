@@ -10,6 +10,7 @@ import { useListReorder } from '../../hooks/useListReorder.js'
  * Personal Information Editor Section.
  * Manages full name, headline, phone, email, location, standard links (LinkedIn, Portfolio)
  * and dynamic custom links with visibility toggling and reordering.
+ * Uses mobile-friendly responsive stacking to eliminate text clipping.
  *
  * @param {Object} props
  * @param {Object} props.personalInfo
@@ -57,7 +58,7 @@ export function PersonalInfoSection({ personalInfo, onChange }) {
       defaultOpen={true}
     >
       {/* Basic Contact Fields */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <Input
           label="Full Name"
           placeholder="e.g. Fahad Ashfaq"
@@ -103,18 +104,20 @@ export function PersonalInfoSection({ personalInfo, onChange }) {
         </h4>
 
         {/* LinkedIn Link Box */}
-        <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 space-y-3">
-          <div className="flex items-center justify-between gap-3">
+        <div className="p-3.5 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-800 dark:text-slate-200">
-              <Link2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <Link2 className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
               <span>LinkedIn Profile</span>
             </div>
-            <ToggleSwitch
-              id="toggle-linkedin-visible"
-              label="Show LinkedIn on Resume"
-              checked={personalInfo.linkedin?.isVisible !== false}
-              onChange={(val) => handleLinkChange('linkedin', { isVisible: val })}
-            />
+            <div className="self-end sm:self-auto">
+              <ToggleSwitch
+                id="toggle-linkedin-visible"
+                label="Show LinkedIn on Resume"
+                checked={personalInfo.linkedin?.isVisible !== false}
+                onChange={(val) => handleLinkChange('linkedin', { isVisible: val })}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -134,18 +137,20 @@ export function PersonalInfoSection({ personalInfo, onChange }) {
         </div>
 
         {/* Portfolio Link Box */}
-        <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 space-y-3">
-          <div className="flex items-center justify-between gap-3">
+        <div className="p-3.5 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-800 dark:text-slate-200">
-              <Globe className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+              <Globe className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
               <span>Portfolio / Personal Website</span>
             </div>
-            <ToggleSwitch
-              id="toggle-portfolio-visible"
-              label="Show Portfolio on Resume"
-              checked={personalInfo.portfolio?.isVisible !== false}
-              onChange={(val) => handleLinkChange('portfolio', { isVisible: val })}
-            />
+            <div className="self-end sm:self-auto">
+              <ToggleSwitch
+                id="toggle-portfolio-visible"
+                label="Show Portfolio on Resume"
+                checked={personalInfo.portfolio?.isVisible !== false}
+                onChange={(val) => handleLinkChange('portfolio', { isVisible: val })}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -185,16 +190,16 @@ export function PersonalInfoSection({ personalInfo, onChange }) {
           {customLinks.map((link, idx) => (
             <div
               key={link.id || idx}
-              className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3 shadow-xs"
+              className="p-3 sm:p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3 shadow-xs"
             >
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <ToggleSwitch
                   id={`toggle-custom-link-${idx}`}
                   label="Show on Resume"
                   checked={link.isVisible !== false}
                   onChange={(val) => updateCustomLink(idx, { isVisible: val })}
                 />
-                <div className="flex items-center gap-1">
+                <div className="flex items-center justify-end gap-1 border-t sm:border-t-0 border-slate-100 dark:border-slate-800 pt-1.5 sm:pt-0 w-full sm:w-auto">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -234,7 +239,7 @@ export function PersonalInfoSection({ personalInfo, onChange }) {
                 />
                 <Input
                   label="Display Text"
-                  placeholder="e.g. GitHub"
+                  placeholder="github.com/username"
                   value={link.displayText || ''}
                   onChange={(e) => updateCustomLink(idx, { displayText: e.target.value })}
                 />

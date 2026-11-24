@@ -103,11 +103,12 @@ export function ResumeLibraryView({ onOpenVariant, onCreateApplication }) {
             Master resume variants. Opening a variant always opens its master copy.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto">
           <Button
             variant="outline"
             leftIcon={Upload}
             onClick={() => setIsImportModalOpen(true)}
+            className="w-full sm:w-auto text-xs sm:text-sm whitespace-nowrap"
           >
             Smart Import
           </Button>
@@ -115,6 +116,7 @@ export function ResumeLibraryView({ onOpenVariant, onCreateApplication }) {
             variant="primary"
             leftIcon={Plus}
             onClick={() => setIsNewModalOpen(true)}
+            className="w-full sm:w-auto text-xs sm:text-sm whitespace-nowrap"
           >
             New Resume
           </Button>
@@ -194,42 +196,45 @@ export function ResumeLibraryView({ onOpenVariant, onCreateApplication }) {
                   </div>
                 </CardHeader>
 
-                <CardFooter className="flex items-center justify-between gap-2 pt-3">
+                <CardFooter className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-slate-100 dark:border-slate-800/60">
                   {/* Secondary management buttons */}
-                  <div className="flex items-center gap-1">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      title="Rename master variant"
-                      onClick={() => setRenamingVariant(variant)}
-                    >
-                      <Edit2 className="h-3.5 w-3.5" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      title="Duplicate master variant"
-                      onClick={() => handleDuplicate(variant)}
-                    >
-                      <Copy className="h-3.5 w-3.5" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-red-500 hover:text-red-600 dark:text-red-400"
-                      title="Delete master variant"
-                      onClick={() => setDeletingVariant(variant)}
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </Button>
+                  <div className="flex items-center gap-1 justify-between sm:justify-start">
+                    <div className="flex items-center gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        title="Rename master variant"
+                        onClick={() => setRenamingVariant(variant)}
+                      >
+                        <Edit2 className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        title="Duplicate master variant"
+                        onClick={() => handleDuplicate(variant)}
+                      >
+                        <Copy className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-500 hover:text-red-600 dark:text-red-400"
+                        title="Delete master variant"
+                        onClick={() => setDeletingVariant(variant)}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
                   </div>
 
                   {/* Primary actions */}
-                  <div className="flex items-center gap-2">
+                  <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => onOpenVariant?.(variant.id)}
+                      className="w-full sm:w-auto text-xs whitespace-nowrap"
                     >
                       Open Master
                     </Button>
@@ -238,6 +243,7 @@ export function ResumeLibraryView({ onOpenVariant, onCreateApplication }) {
                       size="sm"
                       rightIcon={ArrowRight}
                       onClick={() => onCreateApplication?.(variant.id)}
+                      className="w-full sm:w-auto text-xs whitespace-nowrap"
                     >
                       Apply
                     </Button>
