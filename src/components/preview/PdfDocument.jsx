@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   headline: {
     fontSize: 11,
     color: '#555555',
-    lineHeight: 1.5,
+    lineHeight: 1.2,
     marginBottom: 4,
   },
   contactRow: {
